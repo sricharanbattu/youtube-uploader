@@ -8,9 +8,9 @@
 
 #the files for youtube upload script
 source_files/scripts/YouTubeUpload/__pycache__/
-source_files/scripts/client_secrets.json
+source_files/scripts/client_secret.json
 source_files/scripts/token.json
-source_files/scripts/YouTubeUpload/client_secrets.json
+source_files/scripts/YouTubeUpload/client_secret.json
 source_files/scripts/YouTubeUpload/token.json
 
 #python cache files
@@ -24,7 +24,8 @@ source_files/scripts/ImageProcessor/__pycache__/
 #distribution / packaging
 .Python
 
-
+# cmake files
+YouTubeAutomation.pyproj
 
 
 
