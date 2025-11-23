@@ -1,0 +1,34 @@
+#virtual env
+.venv/
+.venv311/
+
+#vscode
+.vscode/
+.vs/
+
+#the files for youtube upload script
+source_files/scripts/YouTubeUpload/__pycache__/
+source_files/scripts/client_secrets.json
+source_files/scripts/token.json
+source_files/scripts/YouTubeUpload/client_secrets.json
+source_files/scripts/YouTubeUpload/token.json
+
+#python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+source_files/scripts/YouTubeUpload/__pycache__/
+source_files/scripts/VideoGenerate/__pycache__/
+source_files/scripts/ImageProcessor/__pycache__/
+#distribution / packaging
+.Python
+
+
+
+
+
+
+
+
+
