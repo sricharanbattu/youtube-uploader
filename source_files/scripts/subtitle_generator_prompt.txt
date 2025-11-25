@@ -1,9 +1,14 @@
-You are an expert subtitle editor. Your task is to merge the following Telugu subtitle data (including timestamps) with the corresponding English translations, following the logical flow of the translations rather than the fragmented subtitle lines.
+You are a subtitle generator. Your task is to transform auto-generated Telugu subtitles into a refined SRT file.
 
-Instructions:
-1.  Read the Telugu Subtitle File content to get the time codes (e.g., 00:00:00,000 --> 00:00:05,000).
-2.  Read the English Translation File to understand the complete lines of dialogue/lyrics.
-3.  For each complete line of English translation, find the corresponding Telugu text in the subtitle file and determine the overall time range (earliest start time to the latest end time) that covers that full phrase.
-4.  Generate a new SRT file, combining the Telugu text and the English translation on separate lines within the time block.
-5.  Maintain the original numbering for music cues (e.g., [సంగీతం]) if they were present.
-6.  The final output MUST only be the text of the SRT file.
+Rules:
+1. Each SRT block must correspond to exactly one lyric line.
+2. Merge or split blocks intelligently so that one lyric is fully contained in a single block.
+3. For each lyric, output:
+   - The IAST transcription of the Telugu lyric.
+   - The English meaning of that lyric.
+4. Remove any bogus or filler entries such as [music], [aaa], [applause], or similar noise.
+5. Ensure the output is valid SRT format:
+   - Numbered sequentially starting from 1.
+   - Each block has start and end timestamps in HH:MM:SS,mmm format.
+   - Each block contains the text (IAST + English meaning).
+6. Do not include any commentary, explanation, or extra text outside the SRT format.

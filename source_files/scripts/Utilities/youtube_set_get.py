@@ -130,3 +130,59 @@ def get_video_language(video_id, youtube=default_youtube, LanguageSettingType="d
         print(f"API error: {e}")
         return None
     
+
+
+def upload_subtitles(video_id, srt_file, language="en", name="English Subtitles", creds=default_creds):
+    """
+    Upload an SRT subtitle file to YouTube for a given video ID.
+    """
+    #creds = get_credentials()
+    youtube = build("youtube", "v3", credentials=creds)
+
+    # Prepare metadata for the caption track
+    body = {
+        "snippet": {
+            "videoId": video_id,
+            "language": language,
+            "name": name,
+            "isDraft": False
+        }
+    }
+
+    # Upload the SRT file
+    media = MediaFileUpload(srt_file, mimetype="application/octet-stream")
+
+    media = MediaFileUpload(srt_file, mimetype="application/octet-stream")
+
+    try:
+        request = youtube.captions().insert(
+            part="snippet",
+            body=body,
+            media_body=media
+        )
+        response = request.execute()
+        print("Uploaded subtitles:", response)
+
+    except HttpError as e:
+        # API-specific errors
+        print(f"HTTP error {e.resp.status}: {e.error_details if hasattr(e, 'error_details') else e}")
+        if e.resp.status == 403:
+            print("Check your API quota or OAuth scopes.")
+        elif e.resp.status == 404:
+            print("Video not found or you lack permission.")
+        elif e.resp.status == 400:
+            print("Bad request — check file format and metadata.")
+    except FileNotFoundError:
+        print(f"Subtitle file {srt_file} not found.")
+    except Exception as e:
+        # Catch-all for unexpected issues
+        print(f"Unexpected error: {e}")
+
+# Example usage
+if __name__ == "__main__":
+    upload_subtitles(
+        video_id="YOUR_VIDEO_ID",
+        srt_file="iast_english_subs.srt",
+        language="te",
+        name="Telugu + English Meaning"
+    )
