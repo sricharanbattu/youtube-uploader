@@ -4,6 +4,11 @@ import argparse
 from ImageProcesser.image_resize import convert_image_for_youtube
 from VideoGenerate.video_generate import create_video
 from YouTubeUpload.youtube_upload import upload_video
+from SubtitleHandler.subtitle_autogen_downloader import get_autogen_subs
+from Utilities.get_credentials import get_credentials
+from Utilities.youtube_metadata_utilities import extract_metadata
+
+
 
 def main():
     parser = argparse.ArgumentParser(description="Upload a video to YouTube with metadata.")
@@ -31,6 +36,7 @@ def main():
     
     output_video_name = f"{base_audio_name}.mp4"
     output_video_file = os.path.join(rel_output_dir, output_video_name)
+    downloaded_captions_file = os.path.join(rel_output_dir, f"{base_audio_name}_downloaded_captions.srt")
 
 
     # Step 1: Convert image for YouTube
@@ -38,7 +44,18 @@ def main():
     # Step 2: Create video from image and audio
     create_video(image_path=args.output_image_file, audio_path=args.input_audio_file, output_path=output_video_file, extra_seconds=2)
     # Step 3: Upload video to YouTube
-    upload_video(video_path=output_video_file, metadata_file=args.input_metadata_file, data_rel_dir=rel_data_dir)
+    creds = get_credentials()
+    metadata = extract_metadata(metadata_file=args.input_metadata_file, data_rel_dir=rel_data_dir)
+    response = upload_video(video_path=output_video_file, metadata=metadata, creds=creds)
+
+
+    # Step 4: Download auto-generated subtitles
+    if response and "id" in response:
+        video_id = response["id"]
+        get_autogen_subs(creds, video_id=video_id, language="te", output_file=downloaded_captions_file, metadata=metadata)
+    else:
+        print("Video upload failed; skipping subtitle download.")
+
     
 
 

@@ -1,0 +1,9 @@
+You are an expert subtitle editor. Your task is to merge the following Telugu subtitle data (including timestamps) with the corresponding English translations, following the logical flow of the translations rather than the fragmented subtitle lines.
+
+Instructions:
+1.  Read the Telugu Subtitle File content to get the time codes (e.g., 00:00:00,000 --> 00:00:05,000).
+2.  Read the English Translation File to understand the complete lines of dialogue/lyrics.
+3.  For each complete line of English translation, find the corresponding Telugu text in the subtitle file and determine the overall time range (earliest start time to the latest end time) that covers that full phrase.
+4.  Generate a new SRT file, combining the Telugu text and the English translation on separate lines within the time block.
+5.  Maintain the original numbering for music cues (e.g., [సంగీతం]) if they were present.
+6.  The final output MUST only be the text of the SRT file.
